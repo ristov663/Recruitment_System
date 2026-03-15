@@ -9,6 +9,7 @@ plugins {
 group = "com.bojan"
 version = "0.0.1-SNAPSHOT"
 description = "recruitment-system"
+val jjwtVersion = "0.12.6"
 
 java {
     toolchain {
@@ -29,11 +30,16 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-h2console")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("tools.jackson.module:jackson-module-kotlin")
+    implementation("jakarta.validation:jakarta.validation-api")
+    implementation("io.jsonwebtoken:jjwt-api:${jjwtVersion}")
+    implementation("io.jsonwebtoken:jjwt-impl:${jjwtVersion}")
+    implementation("io.jsonwebtoken:jjwt-jackson:${jjwtVersion}")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")
