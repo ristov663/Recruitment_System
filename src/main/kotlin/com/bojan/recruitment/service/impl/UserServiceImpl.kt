@@ -8,8 +8,8 @@ import com.bojan.recruitment.enums.UserRole
 import com.bojan.recruitment.exceptions.EntityNotFoundException
 import com.bojan.recruitment.exceptions.InvalidEntityException
 import com.bojan.recruitment.mapper.toDto
-import com.bojan.recruitment.mapper.toEntity
 import com.bojan.recruitment.mapper.toPageDto
+import com.bojan.recruitment.mapper.toUserEntity
 import com.bojan.recruitment.repository.UserRepository
 import com.bojan.recruitment.service.UserService
 import org.springframework.data.domain.Pageable
@@ -35,7 +35,7 @@ class UserServiceImpl(
     }
 
     override fun createUser(userRequestDto: UserRequestDTO): UserResponseDTO {
-        val saverUser = userRepository.save(userRequestDto.toEntity())
+        val saverUser = userRepository.save(userRequestDto.toUserEntity())
         return saverUser.toDto()
     }
 
