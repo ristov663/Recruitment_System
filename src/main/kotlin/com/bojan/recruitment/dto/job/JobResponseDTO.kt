@@ -4,7 +4,6 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class JobResponseDTO(
-
     val id: UUID,
     val title: String,
     val description: String,
@@ -14,5 +13,4 @@ data class JobResponseDTO(
     val salaryRange: String,
     val createdAt: LocalDateTime,
     val createdBy: String
-
 )

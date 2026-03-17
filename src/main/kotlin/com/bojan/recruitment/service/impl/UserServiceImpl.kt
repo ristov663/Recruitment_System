@@ -13,7 +13,10 @@ import com.bojan.recruitment.mapper.toUserEntity
 import com.bojan.recruitment.repository.UserRepository
 import com.bojan.recruitment.service.UserService
 import org.springframework.data.domain.Pageable
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -21,7 +24,7 @@ import java.util.UUID
 @Service
 class UserServiceImpl(
     private val userRepository: UserRepository
-) : UserService {
+) : UserService, UserDetailsService {
 
     override fun getAllUsers(pageable: Pageable): PageResponse<UserResponseDTO> {
         return userRepository.findAll(pageable).map { it.toDto() }.toPageDto()
@@ -76,6 +79,12 @@ class UserServiceImpl(
     }
 
     override fun loadUserByUsername(username: String): UserDetails {
-        return userRepository.findByEmail(username)
+        val user = userRepository.findByEmail(username)
+
+        return User(
+            user.email,
+            user.password,
+            listOf(SimpleGrantedAuthority(user.role.name))
+        )
     }
 }

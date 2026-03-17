@@ -3,7 +3,6 @@ package com.bojan.recruitment.dto.job
 import jakarta.validation.constraints.NotBlank
 
 data class JobRequestDTO(
-
     @field:NotBlank
     val title: String,
 
@@ -21,5 +20,4 @@ data class JobRequestDTO(
 
     @field:NotBlank
     val salaryRange: String
-
 )
