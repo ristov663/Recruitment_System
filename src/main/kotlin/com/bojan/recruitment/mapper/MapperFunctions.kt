@@ -1,13 +1,14 @@
 package com.bojan.recruitment.mapper
 
 import com.bojan.recruitment.dto.PageResponse
-import com.bojan.recruitment.dto.application.ApplicationRequestDTO
 import com.bojan.recruitment.dto.application.ApplicationResponseDTO
 import com.bojan.recruitment.dto.job.JobRequestDTO
 import com.bojan.recruitment.dto.job.JobResponseDTO
+import com.bojan.recruitment.dto.profile.CandidateProfileResponseDTO
 import com.bojan.recruitment.dto.user.UserRequestDTO
 import com.bojan.recruitment.dto.user.UserResponseDTO
 import com.bojan.recruitment.model.Application
+import com.bojan.recruitment.model.CandidateProfile
 import com.bojan.recruitment.model.Job
 import com.bojan.recruitment.model.User
 import org.springframework.data.domain.Page
@@ -66,6 +67,17 @@ fun Application.toDto() = ApplicationResponseDTO(
     appliedAt = appliedAt,
     cvUrl = cvUrl
 )
+
+fun CandidateProfile.toDto(): CandidateProfileResponseDTO {
+    return CandidateProfileResponseDTO(
+        id = id,
+        userId = user.id,
+        education = education,
+        experienceYears = experienceYears,
+        skills = skills,
+        cvFilePath = cvFilePath
+    )
+}
 
 fun <T : Any> Page<T>.toPageDto(): PageResponse<T> {
     return PageResponse(
