@@ -13,6 +13,8 @@ import com.bojan.recruitment.service.JobService
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.security.core.context.SecurityContextHolder
+import com.bojan.recruitment.model.User
 import java.util.UUID
 
 @Service
@@ -36,7 +38,12 @@ class JobServiceImpl(
 
     override fun createJob(dto: JobRequestDTO): JobResponseDTO {
 
-        val entity = dto.toJobEntity()
+        val principal = SecurityContextHolder.getContext().authentication?.principal
+
+        val user = principal as? User
+            ?: throw RuntimeException("User not authenticated")
+
+        val entity = dto.toJobEntity(user)
 
         return jobRepository.save(entity).toDto()
     }

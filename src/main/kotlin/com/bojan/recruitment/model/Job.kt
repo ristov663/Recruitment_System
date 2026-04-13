@@ -12,7 +12,7 @@ import java.util.*
 class Job(
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
+    @Column(name = "id", updatable = false, nullable = false)
     val id: UUID = UUID.randomUUID(),
 
     @Column(nullable = false)

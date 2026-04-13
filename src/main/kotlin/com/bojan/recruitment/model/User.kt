@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 class User(
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
+    @Column(nullable = false, updatable = false)
     val id: UUID = UUID.randomUUID(),
     var firstName: String,
     var lastName: String,

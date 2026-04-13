@@ -42,9 +42,13 @@ class CandidateProfileServiceImpl(
 
         val userId = getCurrentUserId()
 
-        return profileRepository.findByUserId(userId)
-            ?.toDto()
-            ?: throw EntityNotFoundException("Profile not found.")
+        val user = userRepository.findById(userId)
+            .orElseThrow { EntityNotFoundException("User not found.") }
+
+        val profile = profileRepository.findByUserId(userId)
+            ?: profileRepository.save(CandidateProfile(user = user))
+
+        return profile.toDto()
     }
 
     override fun downloadCv(): ByteArray {

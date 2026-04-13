@@ -8,7 +8,6 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
-import java.nio.charset.StandardCharsets
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -19,7 +18,7 @@ class TokenServiceImpl(
 ) : TokenService {
 
     private val secretKey = Keys.hmacShaKeyFor(
-        jwtProperties.key.toByteArray(StandardCharsets.UTF_8),
+        jwtProperties.key.toByteArray(),
     )
     private val invalidatedTokens = ConcurrentHashMap.newKeySet<String>()
 
@@ -34,10 +33,10 @@ class TokenServiceImpl(
     }
 
     private fun generateToken(userDetails: UserDetails, expirationDate: Date): String {
-        val user = userRepository.findByEmail(userDetails.username)
+        val user = userRepository.findByUserName(userDetails.username)
 
         return Jwts.builder()
-            .subject(userDetails.username)
+            .subject(user.email.trim().lowercase())
             .issuedAt(Date(System.currentTimeMillis()))
             .expiration(expirationDate)
             .claim("userId", user.id.toString())

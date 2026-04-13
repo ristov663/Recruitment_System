@@ -12,7 +12,6 @@ import com.bojan.recruitment.model.CandidateProfile
 import com.bojan.recruitment.model.Job
 import com.bojan.recruitment.model.User
 import org.springframework.data.domain.Page
-import org.springframework.data.jpa.domain.AbstractAuditable_.createdBy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.UUID
@@ -36,7 +35,7 @@ fun User.toDto() = UserResponseDTO(
     role = role
 )
 
-fun JobRequestDTO.toJobEntity() = Job(
+fun JobRequestDTO.toJobEntity(user: User) = Job(
     id = UUID.randomUUID(),
     title = title,
     description = description,
@@ -44,7 +43,7 @@ fun JobRequestDTO.toJobEntity() = Job(
     location = location,
     experienceLevel = experienceLevel,
     salaryRange = salaryRange,
-    createdBy = createdBy as User,
+    createdBy = user
 )
 
 fun Job.toDto() = JobResponseDTO(

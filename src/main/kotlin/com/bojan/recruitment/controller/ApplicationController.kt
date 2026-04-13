@@ -4,7 +4,10 @@ import com.bojan.recruitment.dto.PageResponse
 import com.bojan.recruitment.dto.application.ApplicationRequestDTO
 import com.bojan.recruitment.dto.application.ApplicationResponseDTO
 import com.bojan.recruitment.dto.application.ApplicationStatusUpdateDTO
+import com.bojan.recruitment.dto.application.MatchExplanationDTO
+import com.bojan.recruitment.dto.job.JobResponseDTO
 import com.bojan.recruitment.service.ApplicationService
+import com.bojan.recruitment.service.ai.JobRecommendationService
 import jakarta.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -16,7 +19,8 @@ import java.util.UUID
 @RestController
 @RequestMapping("/api/v1/applications")
 class ApplicationController(
-    private val applicationService: ApplicationService
+    private val applicationService: ApplicationService,
+    private val jobRecommendationService: JobRecommendationService
 ) {
 
     @PostMapping
@@ -60,4 +64,27 @@ class ApplicationController(
     ): PageResponse<ApplicationResponseDTO> =
         applicationService.getMyApplications(page)
 
+    @GetMapping("/{id}/explain")
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
+    fun explainApplication(
+        @PathVariable id: UUID
+    ): MatchExplanationDTO =
+        applicationService.explainApplication(id)
+
+    @GetMapping("/job/{jobId}/best")
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
+    fun getBestCandidate(
+        @PathVariable jobId: UUID
+    ): ApplicationResponseDTO =
+        applicationService.getBestCandidate(jobId)
+
+    @GetMapping("/{id}/summary")
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
+    fun getSummary(@PathVariable id: UUID): String =
+        applicationService.getApplicationSummary(id)
+
+    @GetMapping("/recommendations")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    fun recommendJobs(): List<JobResponseDTO> =
+        jobRecommendationService.recommendJobsForCurrentUser()
 }

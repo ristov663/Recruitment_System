@@ -13,8 +13,6 @@ import com.bojan.recruitment.mapper.toUserEntity
 import com.bojan.recruitment.repository.UserRepository
 import com.bojan.recruitment.service.UserService
 import org.springframework.data.domain.Pageable
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
@@ -79,12 +77,6 @@ class UserServiceImpl(
     }
 
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository.findByEmail(username)
-
-        return User(
-            user.email,
-            user.password,
-            listOf(SimpleGrantedAuthority(user.role.name))
-        )
+        return userRepository.findByEmail(username)
     }
 }

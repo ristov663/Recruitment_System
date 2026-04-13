@@ -4,6 +4,7 @@ import com.bojan.recruitment.dto.PageResponse
 import com.bojan.recruitment.dto.application.ApplicationRequestDTO
 import com.bojan.recruitment.dto.application.ApplicationResponseDTO
 import com.bojan.recruitment.dto.application.ApplicationStatusUpdateDTO
+import com.bojan.recruitment.dto.application.MatchExplanationDTO
 import org.springframework.data.domain.Pageable
 import java.util.UUID
 
@@ -14,4 +15,7 @@ interface ApplicationService {
     fun getApplication(id: UUID): ApplicationResponseDTO
     fun getApplicationsByJob(jobId: UUID, pageable: Pageable): PageResponse<ApplicationResponseDTO>
     fun getMyApplications(pageable: Pageable): PageResponse<ApplicationResponseDTO>
+    fun explainApplication(id: UUID): MatchExplanationDTO
+    fun getBestCandidate(jobId: UUID): ApplicationResponseDTO
+    fun getApplicationSummary(id: UUID): String
 }

@@ -11,7 +11,6 @@ import java.util.UUID
 interface ApplicationRepository : JpaRepository<Application, UUID> {
 
     fun findByCandidateId(candidateId: UUID, pageable: Pageable): Page<Application>
-
     fun findByJobId(jobId: UUID, pageable: Pageable): Page<Application>
-
+    fun findByJobIdOrderByMatchScoreDesc(jobId: UUID, pageable: Pageable): Page<Application>
 }

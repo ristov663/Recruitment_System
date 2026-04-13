@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 import java.util.*
 
 @Service
@@ -23,9 +24,9 @@ class FileStorageServiceImpl : FileStorageService {
 
         val filePath = uploadDir.resolve(fileName)
 
-        Files.copy(file.inputStream, filePath)
+        Files.copy(file.inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
 
-        return filePath.toString()
+        return filePath.toString().replace("\\", "/")
     }
 
     override fun loadFile(path: String): ByteArray {

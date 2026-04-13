@@ -12,3 +12,13 @@ spring:
   jackson:
     serialization:
       indent-output: true
+
+  ai:
+    openai:
+      api-key: ${API_KEY}
+      embedding:
+        options:
+          model: text-embedding-3-small
+      chat:
+        options:
+          model: gpt-4o-mini

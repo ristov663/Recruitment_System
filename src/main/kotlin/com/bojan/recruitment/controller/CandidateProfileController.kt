@@ -3,6 +3,7 @@ package com.bojan.recruitment.controller
 import com.bojan.recruitment.dto.profile.CandidateProfileResponseDTO
 import com.bojan.recruitment.service.CandidateProfileService
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -26,8 +27,12 @@ class CandidateProfileController(
         profileService.getMyProfile()
 
     @GetMapping("/cv")
-    @PreAuthorize("hasRole('CANDIDATE')")
-    fun downloadCv(): ByteArray =
-        profileService.downloadCv()
+    fun downloadCv(): ResponseEntity<ByteArray> {
+        val file = profileService.downloadCv()
 
+        return ResponseEntity.ok()
+            .header("Content-Type", "application/pdf")
+            .header("Content-Disposition", "attachment; filename=cv.pdf")
+            .body(file)
+    }
 }

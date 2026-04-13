@@ -8,7 +8,7 @@ import java.util.*
 class CandidateProfile(
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
+    @Column(name = "id", updatable = false, nullable = false)
     val id: UUID = UUID.randomUUID(),
 
     @OneToOne(fetch = FetchType.LAZY)

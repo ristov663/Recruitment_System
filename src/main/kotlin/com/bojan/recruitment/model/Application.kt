@@ -10,7 +10,7 @@ import java.util.*
 class Application(
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "CHAR(36)")
+    @Column(name = "id", updatable = false, nullable = false)
     val id: UUID = UUID.randomUUID(),
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,7 +26,9 @@ class Application(
 
     var appliedAt: LocalDateTime = LocalDateTime.now(),
 
-    var cvUrl: String? = null
+    var cvUrl: String? = null,
+
+    var matchScore: Double
 
 ) {
 
