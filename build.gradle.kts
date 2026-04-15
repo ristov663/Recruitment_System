@@ -43,6 +43,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-impl:${jjwtVersion}")
     implementation("io.jsonwebtoken:jjwt-jackson:${jjwtVersion}")
     implementation("org.apache.pdfbox:pdfbox:2.0.30")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")

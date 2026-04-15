@@ -2,6 +2,7 @@ package com.bojan.recruitment.mapper
 
 import com.bojan.recruitment.dto.PageResponse
 import com.bojan.recruitment.dto.application.ApplicationResponseDTO
+import com.bojan.recruitment.dto.interview.InterviewResponseDTO
 import com.bojan.recruitment.dto.job.JobRequestDTO
 import com.bojan.recruitment.dto.job.JobResponseDTO
 import com.bojan.recruitment.dto.profile.CandidateProfileResponseDTO
@@ -9,6 +10,7 @@ import com.bojan.recruitment.dto.user.UserRequestDTO
 import com.bojan.recruitment.dto.user.UserResponseDTO
 import com.bojan.recruitment.model.Application
 import com.bojan.recruitment.model.CandidateProfile
+import com.bojan.recruitment.model.Interview
 import com.bojan.recruitment.model.Job
 import com.bojan.recruitment.model.User
 import org.springframework.data.domain.Page
@@ -77,6 +79,15 @@ fun CandidateProfile.toDto(): CandidateProfileResponseDTO {
         cvFilePath = cvFilePath
     )
 }
+
+fun Interview.toDto() = InterviewResponseDTO(
+    id = id,
+    applicationId = application.id,
+    scheduledAt = scheduledAt,
+    interviewer = interviewer,
+    notes = notes,
+    score = score
+)
 
 fun <T : Any> Page<T>.toPageDto(): PageResponse<T> {
     return PageResponse(
